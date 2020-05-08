@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { TextInput } from '@aragon/ui';
+import { TextInput, DropDown } from '@aragon/ui';
 import styled, { css } from 'styled-components';
+import { allOptions } from '../constants/options';
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
 	const [ price, setPrice ] = useState('');
 	const [ makerAddress, setMakerAddress ] = useState('');
+	const [ selectedOption, setSelectedOption ] = useState('');
+
 	const inputStyle = {
 		width: '300px',
 		'margin-bottom': '30px'
 	};
 	return (
 		<Wrapper>
+			<DropDown
+				style={inputStyle}
+				items={allOptions.map((x) => x.name)}
+				selected={selectedOption}
+				onChange={setSelectedOption}
+				placeholder={'Select an Option'}
+			/>
 			<TextInput
 				value={amount}
 				placeholder={'Amount'}
@@ -51,4 +61,7 @@ const ColumnWrapper = css`
 	align-items: center;
 `;
 
-const Wrapper = styled.div`${ColumnWrapper};`;
+const Wrapper = styled.div`
+	${ColumnWrapper};
+	margin-top: 200px;
+`;
