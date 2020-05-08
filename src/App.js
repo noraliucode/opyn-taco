@@ -7,7 +7,7 @@ export default function App() {
     <Main>
       <Header
         primary="Opyn TaCo"
-        secondary={<Button mode="strong" label="Add tokens" />}
+        secondary={<Button mode="strong" label="Connect" />}
       />
       <MakeOrder />
     </Main>
