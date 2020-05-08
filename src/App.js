@@ -6,7 +6,7 @@ export default function App() {
   return (
     <Main>
       <Header
-        primary="Opyn Trade Corner"
+        primary="Opyn TaCo"
         secondary={<Button mode="strong" label="Add tokens" />}
       />
       <MakeOrder />
