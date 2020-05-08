@@ -1,26 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Main, Header, Button } from '@aragon/ui'
+import MakeOrder from './pages/MakeOrder'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Main>
+      <Header
+        primary="Opyn Trade Corner"
+        secondary={<Button mode="strong" label="Add tokens" />}
+      />
+      <MakeOrder />
+    </Main>
+  )
 }
-
-export default App;
