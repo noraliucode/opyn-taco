@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, DropDown } from '@aragon/ui';
+import { TextInput, DropDown, Button } from '@aragon/ui';
 import styled, { css } from 'styled-components';
 import { allOptions } from '../constants/options';
 
@@ -48,6 +48,10 @@ const MakeOrder = () => {
 					setMakerAddress(target.value);
 				}}
 			/>
+
+			<div style={{ marginBottom: '40px' }} />
+
+			<Button mode="strong" label="Create and Sign Order!" />
 		</Wrapper>
 	);
 };
