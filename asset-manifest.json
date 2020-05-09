@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/opyn-taco/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/opyn-taco/static/js/main.b0275b9a.chunk.js",
+    "main.js.map": "/opyn-taco/static/js/main.b0275b9a.chunk.js.map",
+    "runtime-main.js": "/opyn-taco/static/js/runtime-main.511e083c.js",
+    "runtime-main.js.map": "/opyn-taco/static/js/runtime-main.511e083c.js.map",
+    "static/js/2.e15ee057.chunk.js": "/opyn-taco/static/js/2.e15ee057.chunk.js",
+    "static/js/2.e15ee057.chunk.js.map": "/opyn-taco/static/js/2.e15ee057.chunk.js.map",
+    "index.html": "/opyn-taco/index.html",
+    "precache-manifest.d0ae13bcd5b5378d05db534fd379d96f.js": "/opyn-taco/precache-manifest.d0ae13bcd5b5378d05db534fd379d96f.js",
+    "service-worker.js": "/opyn-taco/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/opyn-taco/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.e15ee057.chunk.js.LICENSE.txt": "/opyn-taco/static/js/2.e15ee057.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.511e083c.js",
+    "static/js/2.e15ee057.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.b0275b9a.chunk.js"
+  ]
+}
