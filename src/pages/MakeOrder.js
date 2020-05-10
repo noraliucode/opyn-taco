@@ -7,11 +7,11 @@ const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
 	const [ price, setPrice ] = useState('');
 	const [ makerAddress, setMakerAddress ] = useState('');
-	const [ selectedOption, setSelectedOption ] = useState('');
+	const [ selectedOption, setSelectedOption ] = useState(1000);
 
 	const inputStyle = {
 		width: '300px',
-		'margin-bottom': '30px'
+		'marginBottom': '30px'
 	};
 	return (
 		<Wrapper>
@@ -21,6 +21,7 @@ const MakeOrder = () => {
 				selected={selectedOption}
 				onChange={setSelectedOption}
 				placeholder={'Select an Option'}
+				header={'Select an Option'}
 			/>
 			<TextInput
 				value={amount}
