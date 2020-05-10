@@ -68,5 +68,5 @@ const ColumnWrapper = css`
 
 const Wrapper = styled.div`
 	${ColumnWrapper};
-	margin-top: 200px;
+	margin-top: 100px;
 `;
