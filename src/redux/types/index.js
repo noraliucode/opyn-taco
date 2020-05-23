@@ -1,0 +1,5 @@
+const SET_MAKER_ADDRESS = 'SET_MAKER_ADDRESS';
+
+export default {
+  SET_MAKER_ADDRESS 
+}

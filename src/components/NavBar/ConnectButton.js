@@ -7,10 +7,13 @@ import {
 // import { connect, disconnect } from '../../utils/web3';
 import { checkAddressAndAddToStorage } from '../../utils/storage';
 import { connect, disconnect } from '../../utils/web3';
+import { useDispatch } from "react-redux";
+import { setMakerAddress } from '../../redux/actions';
 
 function ConnectButton() {
   const [user, setUser] = useState(''); // the current connected user
   const [isConnected, setIsConnected] = useState(false);
+  const dispatch = useDispatch();
 
   const connectWeb3 = async () => {
     const address = await connect();
@@ -19,6 +22,7 @@ function ConnectButton() {
     setIsConnected(true);
     setUser(address);
     checkAddressAndAddToStorage(address);
+    dispatch(setMakerAddress(address))
   };
 
   const disconnectWeb3 = async () => {
