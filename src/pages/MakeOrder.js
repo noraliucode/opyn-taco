@@ -3,8 +3,6 @@ import { TextInput, DropDown, Button } from '@aragon/ui';
 import styled, { css } from 'styled-components';
 import { allOptions } from '../constants/options';
 import { createOrder } from '../utils/0x';
-import { checkConnectedAndGetAddress } from '../utils/web3';
-
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
@@ -15,13 +13,6 @@ const MakeOrder = () => {
 	const [ makerAsset, setMakerAsset ] = useState('');
 	const [ takerAsset, setTakerAsset ] = useState('');
 	const [ expiry, setExpiry ] = useState('');
-	const address = checkConnectedAndGetAddress()
-
-	useEffect(()=>{
-		setMakerAddress(makerAddress)
-		console.log('address 123', address)
-	}, [address])
-	// {maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry}
 
 	const inputStyle = {
 		width: '300px',
