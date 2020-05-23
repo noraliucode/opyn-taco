@@ -1,25 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, DropDown, Button } from '@aragon/ui';
 import styled, { css } from 'styled-components';
 import { allOptions } from '../constants/options';
+import { createOrder } from '../utils/0x';
+import { checkConnectedAndGetAddress } from '../utils/web3';
+
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
+	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
 	const [ price, setPrice ] = useState('');
 	const [ makerAddress, setMakerAddress ] = useState('');
 	const [ selectedOption, setSelectedOption ] = useState(1000);
+	const [ makerAsset, setMakerAsset ] = useState('');
+	const [ takerAsset, setTakerAsset ] = useState('');
+	const [ expiry, setExpiry ] = useState('');
+	const address = checkConnectedAndGetAddress()
+
+	useEffect(()=>{
+		setMakerAddress(makerAddress)
+		console.log('address 123', address)
+	}, [address])
+	// {maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry}
 
 	const inputStyle = {
 		width: '300px',
 		'marginBottom': '30px'
 	};
+
+	const createAndSignOrder = (data) => {
+		console.log('data', data)
+	  const {maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry} = data
+		// const order = createOrder(data)
+	}
 	return (
 		<Wrapper>
 			<DropDown
 				style={inputStyle}
 				items={allOptions.map((x) => x.name)}
 				selected={selectedOption}
-				onChange={setSelectedOption}
+				onChange={()=>{
+					setSelectedOption()
+					setMakerAsset(selectedOption.addr)
+				}}
 				placeholder={'Select an Option'}
 				header={'Select an Option'}
 			/>
@@ -52,7 +75,15 @@ const MakeOrder = () => {
 
 			<div style={{ marginBottom: '40px' }} />
 
-			<Button mode="strong" label="Create and Sign Order!" />
+			<Button mode="strong" label="Create and Sign Order!" onClick={()=>createAndSignOrder(
+				{
+					maker: makerAddress,
+					makerAsset,
+					takerAsset,
+					makerAssetAmount: amount,
+					takerAssetAmount,
+					expiry
+				})}/>
 		</Wrapper>
 	);
 };
