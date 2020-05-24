@@ -187,7 +187,7 @@ const ButtonWrapper = styled.div`
 	${ColumnWrapper};
 	margin: 30px;
 	color: #09bee5;
-	font-size: 25px;
+	font-size: 20px;
 	letter-spacing: 4px;
 	text-transform: uppercase;
 `;
