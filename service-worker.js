@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/opyn-taco/precache-manifest.5d18c9379dcf4172bcc2db7f862fe024.js"
+  "/opyn-taco/precache-manifest.bd39b8dba87f0737685d11a91d084a5c.js"
 );
 
 self.addEventListener('message', (event) => {
