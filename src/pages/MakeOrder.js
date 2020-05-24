@@ -74,11 +74,6 @@ const MakeOrder = () => {
 
 	return (
 		<Wrapper>
-			{/* <RowWrapper>
-				<Button mode="strong" label="Buy oToken" />
-				<Button>Sell oToken</Button>
-			</RowWrapper> */}
-
 			<RowWrapper>
 				<Cointainer>
 					<Title>Sending</Title>
