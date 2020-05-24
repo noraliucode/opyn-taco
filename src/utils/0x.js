@@ -1,6 +1,8 @@
 import { assetDataUtils } from '@0x/order-utils';
 import BigNumber from 'bignumber.js';
 
+const endpoint = 'https://api.0x.org/';
+
 /**
  * Create Order Object
  * @param {string} maker
@@ -32,4 +34,18 @@ export const createOrder = (data) => {
 		takerFeeAssetData: '0x'
 	};
 	return order;
+};
+
+export const broadcastOrders = async (orders) => {
+	const url = `${endpoint}sra/v3/orders`;
+	const res = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(orders)
+	});
+	if (res.status === 200) return;
+	const jsonRes = await res.json();
+	throw jsonRes.validationErrors[0].reason;
 };

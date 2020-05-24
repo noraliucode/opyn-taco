@@ -31,8 +31,11 @@ const MakeOrder = () => {
 			const found = allOptions.find((element, index) => index === selectedOptionIndex);
 			console.log('found', found);
 			setSelectedOption(found);
+			const foundERC20 = ERC20List.find((element, index) => index === selectedERC20Index);
+			console.log('foundERC20', foundERC20);
+			setSelectedERC20(foundERC20);
 		},
-		[ selectedOptionIndex ]
+		[ selectedOptionIndex, selectedERC20Index ]
 	);
 
 	const inputStyle = {
@@ -40,11 +43,16 @@ const MakeOrder = () => {
 		marginBottom: '30px'
 	};
 
-	const createAndSignOrder = (data) => {
+	const createAndSignOrder = async (data) => {
 		console.log('data', data);
-		const { maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry } = data;
 		const order = createOrder(data);
-		signOrder(order);
+		const signedOrder = await signOrder(order);
+		try {
+			await broadcastOrders([ signedOrder ]);
+		} catch (error) {
+			// toast(error);
+			console.log(error.message);
+		}
 	};
 
 	const renderOtokenList = () => {
