@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, DropDown, Button, textStyle } from '@aragon/ui';
+import { TextInput, DropDown, Button, useToast } from '@aragon/ui';
 import styled, { css } from 'styled-components';
 import { allOptions } from '../constants/options';
-import { createOrder } from '../utils/0x';
+import { createOrder, broadcastOrders } from '../utils/0x';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMakerAddress } from '../redux/actions';
 import { signOrder } from '../utils/web3';
 import arrow from '../assets/arrow.png';
 import ERC20List from '../utils/erc20List';
+import BigNumber from 'bignumber.js';
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
@@ -24,6 +25,7 @@ const MakeOrder = () => {
 	const [ isSellingOtoken, setIsSellingOtoken ] = useState(true);
 	const makerAddress = useSelector((state) => state.makerAddress);
 	const dispatch = useDispatch();
+	const toast = useToast();
 	useEffect(
 		() => {
 			console.log('selectedOptionIndex', selectedOptionIndex);
@@ -50,8 +52,7 @@ const MakeOrder = () => {
 		try {
 			await broadcastOrders([ signedOrder ]);
 		} catch (error) {
-			// toast(error);
-			console.log(error.message);
+			toast(error);
 		}
 	};
 
@@ -143,8 +144,8 @@ const MakeOrder = () => {
 						maker: makerAddress,
 						makerAsset: isSellingOtoken ? selectedOption.addr : selectedERC20.contractAddress,
 						takerAsset: isSellingOtoken ? selectedERC20.contractAddress : selectedOption.addr,
-						makerAssetAmount: amount,
-						takerAssetAmount: takerAmount,
+						makerAssetAmount: new BigNumber(amount),
+						takerAssetAmount: new BigNumber(takerAmount),
 						expiry: Math.round(new Date() / 1000) + 24 * 60 * 60 // expire after 1 day
 					})}
 			/>
