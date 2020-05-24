@@ -11,6 +11,7 @@ import ERC20List from '../utils/erc20List';
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
+	const [ takerAmount, setTakerAmount ] = useState('');
 	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
 	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(1000);
 	const [ selectedERC20Index, setSelectedERC20Index ] = useState(1000);
@@ -67,7 +68,7 @@ const MakeOrder = () => {
 				selected={selectedERC20Index}
 				onChange={setSelectedERC20Index}
 				placeholder={'Select Currency'}
-				header={'Select Option'}
+				header={'Select Currency'}
 			/>
 		);
 	};
@@ -80,7 +81,7 @@ const MakeOrder = () => {
 					{isSellingOtoken ? renderOtokenList() : renderERC20List()}
 					<TextInput
 						value={amount}
-						placeholder={'Amount'}
+						placeholder={'Sending Amount'}
 						style={inputStyle}
 						onChange={({ target }) => {
 							setAmount(target.value);
@@ -89,7 +90,7 @@ const MakeOrder = () => {
 
 					<TextInput
 						value={makerAddress}
-						placeholder={'MakerAddress'}
+						placeholder={'Maker Address'}
 						style={inputStyle}
 						onChange={({ target }) => {
 							dispatch(setMakerAddress(target.value));
@@ -105,17 +106,17 @@ const MakeOrder = () => {
 					<Title>Receiving</Title>
 					{isSellingOtoken ? renderERC20List() : renderOtokenList()}
 					<TextInput
-						value={amount}
-						placeholder={'Amount'}
+						value={takerAmount}
+						placeholder={'Receiving Amount'}
 						style={inputStyle}
 						onChange={({ target }) => {
-							setAmount(target.value);
+							setTakerAmount(target.value);
 						}}
 					/>
 
 					<TextInput
 						value={takerAddress}
-						placeholder={'TakerAddress'}
+						placeholder={'Taker Address'}
 						style={inputStyle}
 						onChange={({ target }) => {
 							dispatch(setMakerAddress(target.value));
@@ -132,10 +133,10 @@ const MakeOrder = () => {
 				onClick={() =>
 					createAndSignOrder({
 						maker: makerAddress,
-						makerAsset: selectedOption.addr,
-						takerAsset: selectedOption.addr,
+						makerAsset: isSellingOtoken ? selectedOption.addr : selectedERC20.contractAddress,
+						takerAsset: isSellingOtoken ? selectedERC20.contractAddress : selectedOption.addr,
 						makerAssetAmount: amount,
-						takerAssetAmount: 0,
+						takerAssetAmount: takerAmount,
 						expiry: Math.round(new Date() / 1000) + 24 * 60 * 60 // expire after 1 day
 					})}
 			/>
