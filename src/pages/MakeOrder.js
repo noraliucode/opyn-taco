@@ -7,16 +7,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMakerAddress } from '../redux/actions';
 import { signOrder } from '../utils/web3';
 import arrow from '../assets/arrow.png';
+import ERC20List from '../utils/erc20List';
 
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
 	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
 	const [ price, setPrice ] = useState('');
 	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(1000);
+	const [ selectedERC20Index, setSelectedERC20Index ] = useState(1000);
 	const [ selectedOption, setSelectedOption ] = useState(null);
+	const [ selectedERC20, setSelectedERC20 ] = useState(null);
 	const [ makerAsset, setMakerAsset ] = useState('');
 	const [ takerAsset, setTakerAsset ] = useState('');
 	const [ expiry, setExpiry ] = useState('');
+	const [ takerAddress, setTakerAddress ] = useState('');
+	const [ isSellingOtoken, setIsSellingOtoken ] = useState(true);
 	const makerAddress = useSelector((state) => state.makerAddress);
 	const dispatch = useDispatch();
 	useEffect(
@@ -42,6 +47,32 @@ const MakeOrder = () => {
 		signOrder(order);
 	};
 
+	const renderOtokenList = () => {
+		return (
+			<DropDown
+				style={inputStyle}
+				items={allOptions.map((x) => x.name)}
+				selected={selectedOptionIndex}
+				onChange={setSelectedOptionIndex}
+				placeholder={'Select Option'}
+				header={'Select Option'}
+			/>
+		);
+	};
+
+	const renderERC20List = () => {
+		return (
+			<DropDown
+				style={inputStyle}
+				items={ERC20List.map((x) => x.name)}
+				selected={selectedERC20Index}
+				onChange={setSelectedERC20Index}
+				placeholder={'Select Currency'}
+				header={'Select Option'}
+			/>
+		);
+	};
+
 	return (
 		<Wrapper>
 			{/* <RowWrapper>
@@ -52,14 +83,7 @@ const MakeOrder = () => {
 			<RowWrapper>
 				<Cointainer>
 					<Title>Sending</Title>
-					<DropDown
-						style={inputStyle}
-						items={allOptions.map((x) => x.name)}
-						selected={selectedOptionIndex}
-						onChange={setSelectedOptionIndex}
-						placeholder={'Select an Option'}
-						header={'Select an Option'}
-					/>
+					{isSellingOtoken ? renderOtokenList() : renderERC20List()}
 					<TextInput
 						value={amount}
 						placeholder={'Amount'}
@@ -88,20 +112,13 @@ const MakeOrder = () => {
 					/>
 				</Cointainer>
 
-				<ButtonWrapper>
-					Sell otoken
+				<ButtonWrapper onClick={() => setIsSellingOtoken(!isSellingOtoken)}>
+					{isSellingOtoken ? 'Sell oToken' : 'Buy oToken'}
 					<img src={arrow} style={{ width: '50px', height: '50px' }} />
 				</ButtonWrapper>
 				<Cointainer>
 					<Title>Receiving</Title>
-					<DropDown
-						style={inputStyle}
-						items={allOptions.map((x) => x.name)}
-						selected={selectedOptionIndex}
-						onChange={setSelectedOptionIndex}
-						placeholder={'Select an Option'}
-						header={'Select an Option'}
-					/>
+					{isSellingOtoken ? renderERC20List() : renderOtokenList()}
 					<TextInput
 						value={amount}
 						placeholder={'Amount'}
@@ -121,8 +138,8 @@ const MakeOrder = () => {
 					/>
 
 					<TextInput
-						value={makerAddress}
-						placeholder={'MakerAddress'}
+						value={takerAddress}
+						placeholder={'TakerAddress'}
 						style={inputStyle}
 						onChange={({ target }) => {
 							dispatch(setMakerAddress(target.value));
@@ -190,4 +207,11 @@ const ButtonWrapper = styled.div`
 	font-size: 20px;
 	letter-spacing: 4px;
 	text-transform: uppercase;
+	height: 100px;
+	justify-self: center;
+	align-self: center;
+	cursor: pointer;
+	width: 150px;
+	box-sizing: border-box;
+	text-align: center;
 `;

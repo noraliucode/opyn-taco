@@ -1,4 +1,4 @@
-export default [
+const ERC20List = [
 	{
 		name: 'Tether USD',
 		symbol: 'USDT',
@@ -28,3 +28,5 @@ export default [
 		rateId: 'dai'
 	}
 ];
+
+export default ERC20List;
