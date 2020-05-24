@@ -12,7 +12,6 @@ import ERC20List from '../utils/erc20List';
 const MakeOrder = () => {
 	const [ amount, setAmount ] = useState('');
 	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
-	const [ price, setPrice ] = useState('');
 	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(1000);
 	const [ selectedERC20Index, setSelectedERC20Index ] = useState(1000);
 	const [ selectedOption, setSelectedOption ] = useState(null);
@@ -94,15 +93,6 @@ const MakeOrder = () => {
 					/>
 
 					<TextInput
-						value={price}
-						placeholder={'Price'}
-						style={inputStyle}
-						onChange={({ target }) => {
-							setPrice(target.value);
-						}}
-					/>
-
-					<TextInput
 						value={makerAddress}
 						placeholder={'MakerAddress'}
 						style={inputStyle}
@@ -125,15 +115,6 @@ const MakeOrder = () => {
 						style={inputStyle}
 						onChange={({ target }) => {
 							setAmount(target.value);
-						}}
-					/>
-
-					<TextInput
-						value={price}
-						placeholder={'Price'}
-						style={inputStyle}
-						onChange={({ target }) => {
-							setPrice(target.value);
 						}}
 					/>
 
