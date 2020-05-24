@@ -10,7 +10,8 @@ import BigNumber from 'bignumber.js';
  * @param {BigNumber} takerAssetAmount
  * @param {number} expiry
  */
-export const createOrder = (maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry) => {
+export const createOrder = (data) => {
+	const { maker, makerAsset, takerAsset, makerAssetAmount, takerAssetAmount, expiry } = data;
 	const salt = BigNumber.random(20).times(new BigNumber(10).pow(new BigNumber(20))).integerValue().toString(10);
 	const order = {
 		senderAddress: '0x0000000000000000000000000000000000000000',
