@@ -13,11 +13,11 @@ import { toBaseUnitBN } from '../utils/number';
 import BigNumber from 'bignumber.js';
 
 const MakeOrder = () => {
-	const [ amount, setAmount ] = useState('0.1');
-	const [ takerAmount, setTakerAmount ] = useState('1');
+	const [ amount, setAmount ] = useState('');
+	const [ takerAmount, setTakerAmount ] = useState('');
 	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
-	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(16);
-	const [ selectedERC20Index, setSelectedERC20Index ] = useState(4);
+	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(1000);
+	const [ selectedERC20Index, setSelectedERC20Index ] = useState(1000);
 	const [ selectedOption, setSelectedOption ] = useState(null);
 	const [ selectedERC20, setSelectedERC20 ] = useState(null);
 	const [ makerAsset, setMakerAsset ] = useState('');
