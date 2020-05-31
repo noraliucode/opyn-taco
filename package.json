@@ -5,6 +5,7 @@
   "dependencies": {
     "@0x/order-utils": "^10.2.4",
     "@0x/subproviders": "^6.0.8",
+    "@0x/utils": "^5.4.1",
     "@aragon/ui": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

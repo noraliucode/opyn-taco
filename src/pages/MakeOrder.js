@@ -8,21 +8,23 @@ import { setMakerAddress } from '../redux/actions';
 import { signOrder } from '../utils/web3';
 import arrow from '../assets/arrow.png';
 import ERC20List from '../utils/erc20List';
+// import { BigNumber } from '@0x/utils';
+import { toBaseUnitBN } from '../utils/number';
 import BigNumber from 'bignumber.js';
 
 const MakeOrder = () => {
-	const [ amount, setAmount ] = useState('');
-	const [ takerAmount, setTakerAmount ] = useState('');
+	const [ amount, setAmount ] = useState('0.1');
+	const [ takerAmount, setTakerAmount ] = useState('1');
 	const [ takerAssetAmount, setTakerAssetAmount ] = useState('');
-	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(1000);
-	const [ selectedERC20Index, setSelectedERC20Index ] = useState(1000);
+	const [ selectedOptionIndex, setSelectedOptionIndex ] = useState(16);
+	const [ selectedERC20Index, setSelectedERC20Index ] = useState(4);
 	const [ selectedOption, setSelectedOption ] = useState(null);
 	const [ selectedERC20, setSelectedERC20 ] = useState(null);
 	const [ makerAsset, setMakerAsset ] = useState('');
 	const [ takerAsset, setTakerAsset ] = useState('');
 	const [ expiry, setExpiry ] = useState('');
 	const [ takerAddress, setTakerAddress ] = useState('');
-	const [ isSellingOtoken, setIsSellingOtoken ] = useState(true);
+	const [ isSellingOtoken, setIsSellingOtoken ] = useState(false);
 	const makerAddress = useSelector((state) => state.makerAddress);
 	const dispatch = useDispatch();
 	const toast = useToast();
@@ -46,15 +48,38 @@ const MakeOrder = () => {
 	};
 
 	const createAndSignOrder = async (data) => {
+		const {
+			maker,
+			makerAsset,
+			takerAsset,
+			makerAssetAmount,
+			takerAssetAmount,
+			expiry,
+			makerTokenDecimal,
+			takerTokenDecimal
+		} = data
 		console.log('data', data);
-		const order = createOrder(data);
+		if (maker === '') {
+      toast('Please connect wallet first');
+      return;
+    }
+    let order;
+			order = {
+				maker,
+				makerAsset,
+				takerAsset,
+				makerAssetAmount: toBaseUnitBN(makerAssetAmount, takerTokenDecimal),
+				takerAssetAmount: toBaseUnitBN(takerAssetAmount, takerTokenDecimal),
+				expiry
+			}
+      order = createOrder(order);
 		const signedOrder = await signOrder(order);
 		try {
 			await broadcastOrders([ signedOrder ]);
 		} catch (error) {
 			toast(error);
 		}
-	};
+	}
 
 	const renderOtokenList = () => {
 		return (
@@ -144,8 +169,10 @@ const MakeOrder = () => {
 						maker: makerAddress,
 						makerAsset: isSellingOtoken ? selectedOption.addr : selectedERC20.contractAddress,
 						takerAsset: isSellingOtoken ? selectedERC20.contractAddress : selectedOption.addr,
-						makerAssetAmount: new BigNumber(amount),
-						takerAssetAmount: new BigNumber(takerAmount),
+						makerAssetAmount: amount,
+						takerAssetAmount: takerAmount,
+						makerTokenDecimal: isSellingOtoken ? selectedOption.decimals : selectedERC20.unit,
+						takerTokenDecimal: isSellingOtoken ? selectedERC20.unit : selectedOption.decimals,
 						expiry: Math.round(new Date() / 1000) + 24 * 60 * 60 // expire after 1 day
 					})}
 			/>
