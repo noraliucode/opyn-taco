@@ -25,6 +25,8 @@ const MakeOrder = () => {
 	const [ expiry, setExpiry ] = useState('');
 	const [ takerAddress, setTakerAddress ] = useState('');
 	const [ isSellingOtoken, setIsSellingOtoken ] = useState(false);
+	const [ isCheckValue, setIsCheckValue ] = useState(false);
+	
 	const makerAddress = useSelector((state) => state.makerAddress);
 	const dispatch = useDispatch();
 	const toast = useToast();
@@ -42,10 +44,11 @@ const MakeOrder = () => {
 		[ selectedOptionIndex, selectedERC20Index ]
 	);
 
-	const inputStyle = {
+	const inputStyle = (value) => ({
 		width: '300px',
-		marginBottom: '30px'
-	};
+		marginBottom: '30px',
+		border: value || !isCheckValue ? '' : '1px solid red'
+	});
 
 	const createAndSignOrder = async (data) => {
 		const {
@@ -84,7 +87,7 @@ const MakeOrder = () => {
 	const renderOtokenList = () => {
 		return (
 			<DropDown
-				style={inputStyle}
+				style={inputStyle(selectedOption)}
 				items={allOptions.map((x) => x.name)}
 				selected={selectedOptionIndex}
 				onChange={setSelectedOptionIndex}
@@ -97,7 +100,7 @@ const MakeOrder = () => {
 	const renderERC20List = () => {
 		return (
 			<DropDown
-				style={inputStyle}
+				style={inputStyle(selectedERC20)}
 				items={ERC20List.map((x) => x.name)}
 				selected={selectedERC20Index}
 				onChange={setSelectedERC20Index}
@@ -113,10 +116,10 @@ const MakeOrder = () => {
 				<Cointainer>
 					<Title>Sending</Title>
 					{isSellingOtoken ? renderOtokenList() : renderERC20List()}
-					<TextInput
+					<TextInput.Number
 						value={amount}
 						placeholder={'Sending Amount'}
-						style={inputStyle}
+						style={inputStyle(amount)}
 						onChange={({ target }) => {
 							setAmount(target.value);
 						}}
@@ -125,7 +128,7 @@ const MakeOrder = () => {
 					<TextInput
 						value={makerAddress}
 						placeholder={'Maker Address'}
-						style={inputStyle}
+						style={inputStyle(makerAddress)}
 						onChange={({ target }) => {
 							dispatch(setMakerAddress(target.value));
 						}}
@@ -139,10 +142,10 @@ const MakeOrder = () => {
 				<Cointainer>
 					<Title>Receiving</Title>
 					{isSellingOtoken ? renderERC20List() : renderOtokenList()}
-					<TextInput
+					<TextInput.Number
 						value={takerAmount}
 						placeholder={'Receiving Amount'}
-						style={inputStyle}
+						style={inputStyle(takerAmount)}
 						onChange={({ target }) => {
 							setTakerAmount(target.value);
 						}}
@@ -151,9 +154,9 @@ const MakeOrder = () => {
 					<TextInput
 						value={takerAddress}
 						placeholder={'Taker Address'}
-						style={inputStyle}
+						style={inputStyle('123')}
 						onChange={({ target }) => {
-							dispatch(setMakerAddress(target.value));
+							setTakerAddress(target.value);
 						}}
 					/>
 				</Cointainer>
@@ -164,7 +167,9 @@ const MakeOrder = () => {
 			<Button
 				mode="strong"
 				label="Create and Sign Order!"
-				onClick={() =>
+				onClick={() => {
+					setIsCheckValue(true)
+					if (!makerAddress || !selectedOption ||  !selectedERC20 || !amount || !takerAmount) return
 					createAndSignOrder({
 						maker: makerAddress,
 						makerAsset: isSellingOtoken ? selectedOption.addr : selectedERC20.contractAddress,
@@ -174,7 +179,8 @@ const MakeOrder = () => {
 						makerTokenDecimal: isSellingOtoken ? selectedOption.decimals : selectedERC20.unit,
 						takerTokenDecimal: isSellingOtoken ? selectedERC20.unit : selectedOption.decimals,
 						expiry: Math.round(new Date() / 1000) + 24 * 60 * 60 // expire after 1 day
-					})}
+					})
+				}}
 			/>
 		</Wrapper>
 	);
