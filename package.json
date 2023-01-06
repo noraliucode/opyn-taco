@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@0x/order-utils": "^10.2.4",
-    "@0x/subproviders": "^6.0.8",
+    "@0x/subproviders": "^7.0.0",
     "@0x/utils": "^5.4.1",
     "@aragon/ui": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -12,7 +12,7 @@
     "@testing-library/user-event": "^7.1.2",
     "bignumber": "^1.1.0",
     "bnc-notify": "^1.2.0",
-    "bnc-onboard": "^1.8.0",
+    "bnc-onboard": "^1.39.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
